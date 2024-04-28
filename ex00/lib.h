@@ -47,6 +47,7 @@ void		uart_init(void);
 void		uart_tx(char c);
 void		uart_printstr(const char *str);
 char		uart_rx(void);
+void		uart_printhex(uint8_t n);
 
 // ic2Management.c
 #define ACK 1
@@ -60,6 +61,10 @@ uint8_t		i2c_read(uint8_t ack);
 void		display_status_code(void);
 void		print_hex_value(unsigned char c);
 void		uart_printnbr(unsigned int nb);
+
+// rtc.c
+void rtc_read_time(void);
+void update_time(uint8_t updatedTime[3], uint8_t updatedDate[4]);
 
 //segments.c
 void	init_segments(void);
