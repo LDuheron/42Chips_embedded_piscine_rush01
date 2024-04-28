@@ -56,7 +56,6 @@ void	display_status_code(void);
 void	print_hex_value(unsigned char c);
 void	uart_printnbr(unsigned int nb);
 
-
 // timer_init.c
 void	timer_init(void);
 

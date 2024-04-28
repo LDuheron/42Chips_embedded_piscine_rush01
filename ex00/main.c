@@ -10,6 +10,18 @@ void	display_led(void)
 	PORTB = currentMode & 0x08 ? LED3_ON : LED3_OFF;
 }
 
+void	switch_mode(void)
+{
+	switch (color)
+	{
+		case 0:
+			break;
+		case 1:
+			break;
+		_delay_ms(1000);
+	}
+}
+
 // SW1 : go to next mode
 // PAS DE MODE 5 ?  
 ISR(PCINT0_vect)
@@ -31,6 +43,8 @@ ISR(PCINT2_vect)
 		currentMode--;
 	display_led();
 }
+
+
 
 int	main(void)
 {
