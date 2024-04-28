@@ -22,6 +22,7 @@ SRCS += main.c
 SRCS += i2c_management.c
 SRCS += uart_management.c
 SRCS += timer_init.c
+SCRS += captor.c
 
 BIN = $(SRCS:.c=.bin)
 

@@ -2,6 +2,9 @@
 #include "lib.h"
 volatile int currentMode = 0;
 
+
+// 3 6 7 8
+
 void	display_led(void)
 {
 	PORTB = currentMode & 0x01 ? LED0_ON : LED0_OFF;
@@ -15,6 +18,7 @@ void	switch_mode(void)
 	switch (currentMode)
 	{
 		case 0:
+			displayRV1();
 			break;
 		case 1:
 			break;
@@ -46,10 +50,9 @@ ISR(PCINT2_vect)
 	switch_mode();
 }
 
-
-
 int	main(void)
 {
+	adc_init();
 	uart_init();
 	i2c_init();
 	timer_init();

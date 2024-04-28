@@ -9,6 +9,9 @@
 #include <util/twi.h>
 
 
+// CAPTOR
+#define ADC_TMP 0b00001000 // temperature
+
 // CONFIG 
 #define I2C_CPU_CLOCK_FREQ 100000
 #define START 1
