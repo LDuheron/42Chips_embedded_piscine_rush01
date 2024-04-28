@@ -5,40 +5,6 @@ volatile int currentMode = 0;
 
 // 3 6 7 8
 
-// mode 0
-void	displayRV1(void)
-{
-	uint16_t	data;
-
-	data = adc_read(RV1);
-}
-
-// mode 1
-void	displayLDR(void)
-{
-	uint16_t	data;
-
-	data = adc_read(LDR);
-}
-
-// mode 2
-void	displayNTC(void)
-{
-	uint16_t	data;
-
-	data = adc_read(NTC);
-}
-
-// mode 3
-void	displayTEMP(void)
-{
-	uint16_t	data;
-
-	data = adc_read(TEMP);
-}
-
-
-
 void	display_led(void)
 {
 	PORTB = currentMode & 0x01 ? LED0_ON : LED0_OFF;
