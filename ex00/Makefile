@@ -24,7 +24,6 @@ SRCS += adc.c
 SRCS += i2c_management.c
 SRCS += uart_management.c
 SRCS += timer_init.c
-SRCS += adc.c
 SRCS += segments.c
 SRCS += captor.c
 

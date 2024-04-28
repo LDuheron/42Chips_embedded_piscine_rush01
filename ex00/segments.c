@@ -44,7 +44,7 @@ void	display_segments(uint8_t dpindex, uint8_t n)
 
 void	display_number(uint32_t n, uint8_t dpindex)
 {
-	uint8_t digit = 0;
+	uint8_t	digit = 0;
 	for (uint8_t i = 0; i < 4; i++)
 	{
 		digit = n % 10;

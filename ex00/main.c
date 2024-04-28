@@ -33,27 +33,30 @@ void	switch_mode(void)
 }
 
 // SW1 : go to next mode
-// PAS DE MODE 5 ?  
 ISR(PCINT0_vect)
 {
+	uart_printnbr(currentMode);
+	uart_printstr("\n");
 	if (currentMode == 11)
 		currentMode = 0;
 	else
 		currentMode++;
 	display_led();
-	uart_printnbr(currentMode);
-	switch_mode();
+
+	// switch_mode();
 }
 
 // SW2 : go to previous mode
 ISR(PCINT2_vect)
 {
+	uart_printnbr(currentMode);
+	uart_printstr("\n");
 	if (currentMode == 0)
 		currentMode = 11;
 	else
 		currentMode--;
 	display_led();
-	switch_mode();
+	// switch_mode();
 }
 
 int	main(void)
@@ -62,12 +65,14 @@ int	main(void)
 	uart_init();
 	i2c_init();
 	timer_init();
+	init_segments();
 
 	DDRB |= (1 << PB0) | (1 << PB1) | (1 << PB2) | (1 << PB4);
+
 	sei();
 	while (1)
 	{
-
+		switch_mode();
 	}
 
 	return (0);
