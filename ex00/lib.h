@@ -3,7 +3,7 @@
 # define LIB_H
 
 #include "avr/io.h"
-#include "util/twi.h"
+#include "util/delay.h"
 #include "avr/interrupt.h"
 
 // CONFIG 
