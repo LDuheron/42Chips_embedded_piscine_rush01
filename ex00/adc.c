@@ -1,4 +1,4 @@
-#include "lib.h"
+#include "./lib.h"
 
 void adc_init() {
 	// Configure voltage reference to AVCC

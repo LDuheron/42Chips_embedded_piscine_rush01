@@ -1,9 +1,43 @@
 
 #include "lib.h"
+
 volatile int currentMode = 0;
 
-
 // 3 6 7 8
+
+// mode 0
+void	displayRV1(void)
+{
+	uint16_t	data;
+
+	data = adc_read(RV1);
+}
+
+// mode 1
+void	displayLDR(void)
+{
+	uint16_t	data;
+
+	data = adc_read(LDR);
+}
+
+// mode 2
+void	displayNTC(void)
+{
+	uint16_t	data;
+
+	data = adc_read(NTC);
+}
+
+// mode 3
+void	displayTEMP(void)
+{
+	uint16_t	data;
+
+	data = adc_read(TEMP);
+}
+
+
 
 void	display_led(void)
 {
@@ -21,8 +55,14 @@ void	switch_mode(void)
 			displayRV1();
 			break;
 		case 1:
+			displayLDR();
 			break;
-		_delay_ms(1000);
+		case 2:
+			displayNTC();
+			break;
+		case 3:
+			displayTEMP();
+			break;
 	}
 }
 
@@ -57,7 +97,7 @@ int	main(void)
 	i2c_init();
 	timer_init();
 
-	DDRB |= (1<<PB0) | (1<<PB1) | (1<<PB2) | (1<<PB4);
+	DDRB |= (1 << PB0) | (1 << PB1) | (1 << PB2) | (1 << PB4);
 	sei();
 	while (1)
 	{

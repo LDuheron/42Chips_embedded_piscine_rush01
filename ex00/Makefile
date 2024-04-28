@@ -19,6 +19,7 @@ CFLAGS = -mmcu=$(MCU) -DF_CPU=$(F_CPU) -Os
 # -Os : optimisation
 
 SRCS += main.c
+SRCS += adc.c
 SRCS += i2c_management.c
 SRCS += uart_management.c
 SRCS += timer_init.c
