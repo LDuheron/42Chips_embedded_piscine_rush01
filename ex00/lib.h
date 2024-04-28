@@ -62,6 +62,11 @@ void	display_status_code(void);
 void	print_hex_value(unsigned char c);
 void	uart_printnbr(unsigned int nb);
 
+//segments.c
+void	init_segments(void);
+void	display_segments(uint8_t dpindex, uint8_t n);
+void	display_number(uint32_t n, uint8_t dpindex);
+
 // adc.c
 typedef enum
 {
