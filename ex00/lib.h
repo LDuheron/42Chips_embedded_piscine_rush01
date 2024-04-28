@@ -92,5 +92,4 @@ void		displayLDR(void);
 void		displayNTC(void);
 void		displayTEMP(void);
 
-
 #endif
