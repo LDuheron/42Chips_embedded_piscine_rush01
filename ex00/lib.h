@@ -5,6 +5,9 @@
 #include "avr/io.h"
 #include "util/delay.h"
 #include "avr/interrupt.h"
+#include <avr/eeprom.h>
+#include <util/twi.h>
+
 
 // CONFIG 
 #define I2C_CPU_CLOCK_FREQ 100000
@@ -47,14 +50,29 @@ void	uart_printstr(const char *str);
 char	uart_rx(void);
 
 // ic2Management.c
+#define ACK 1
+#define NACK 0
+
 void	i2c_init(void);
-void	i2c_start(void);
+void	i2c_start(uint8_t addr, uint8_t directionBit); //directionBit 1 = read 0 = write
 void	i2c_stop(void);
 void	i2c_write(unsigned char data);
-void	i2c_read(void);
+uint8_t	i2c_read(uint8_t ack);
 void	display_status_code(void);
 void	print_hex_value(unsigned char c);
 void	uart_printnbr(unsigned int nb);
+
+// adc.c
+typedef enum
+{
+	RV1,
+	LDR,
+	NTC,
+	TEMP
+} adc_channel;
+
+void		adc_init();
+uint16_t	adc_read(adc_channel channel);
 
 // timer_init.c
 void	timer_init(void);

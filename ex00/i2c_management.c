@@ -1,81 +1,58 @@
 
 #include "lib.h"
 
-void	i2c_init(void)
-{
-	// define la clock frequency determine par le TWI bit rate	
-	// SCL frequency = CPU clock frequency / (16 + 2 * TWBR * PrescalerValue)
-	TWBR = 72;
-	// set le prescaler  1	// laissez le prescaler a un
-	// TWSR &= ~(1<<TWPS0);
-	// TWSR &= ~(1<<TWPS1);
+#define SCL_CLOCK 100000L
+
+void i2c_init(void) {
+	// set the clock period
+	TWBR =  ((F_CPU / SCL_CLOCK) - 16) / 2;
+	// set prescale 0
 	TWSR = 0;
-
+	// enable i2c
+	TWCR = (1 << TWEN);
 }
 
-void	display_status_code(void)
-{
-	if (TWSR == 0x08)
-		uart_printstr("A START condition has been transmitted\n\r");
-	else if (TWSR == 0x10)
-		uart_printstr("A repeated START condition has been transmitted\n\r");
-	else if (TWSR == 0x18)
-		uart_printstr("SLA+W has been transmitted; ACK has been received\n\r");
-	else if (TWSR == 0x20)
-		uart_printstr("SLA+W has been transmitted; NOT ACK has been received\n\r");
-	else if (TWSR == 0x28)
-		uart_printstr("Data byte has been transmitted; ACK has been received\n\r");
-	else if (TWSR == 0x30)
-		uart_printstr("Data byte has been transmitted; NOT ACK has been received\n\r");
-	else if (TWSR == 0x38)
-		uart_printstr("Abitration lost in SLA+W or data bytes\n\r");
-	else
-		uart_printstr("Unknown status\n\r");
-}
-
-// Demarre la transmission I2C entre le microcontrolleur et le capteur
-void	i2c_start(void)
-{
+void i2c_start(uint8_t addr, uint8_t directionBit) {
+	// send start
 	TWCR = (1 << TWINT) | (1 << TWSTA) | (1 << TWEN);
-
-	while (!(TWCR & (1<<TWINT))) {} // wait for TWINT flag set
-	// -> indicates that the START condition has been transmitted.
-
-	display_status_code();
-
-}
-
-// Interrompt la communication entre le microcontrolleur et le capteur
-void	i2c_stop(void)
-{
-	// TWCR |= (1<< TWSTO); // Twi stop condition bit
-	TWCR = (1 << TWINT) | (1 << TWEN) | (1 << TWSTO);
-}
-
-// ecrit le contenu du registre TWDR
-// et l'envoie dans le capteur de temperature ?
-void	i2c_write(unsigned char data)
-{
-	TWDR = data; // capteur en mode ecriture
+	// wait for start condition ack
+	while ((TWCR & (1 << TWINT)) == 0) {}
+	// check if start is received
+	if (TW_STATUS != TW_START)
+		return ;
+	// set data with address / directionBit 1 = read 0 = write
+	TWDR = (addr << 1) | directionBit;
+	// sent data
 	TWCR = (1 << TWINT) | (1 << TWEN);
+	// wait the ack
+	while ((TWCR & (1 << TWINT)) == 0) {}
+}
+
+void i2c_stop(void) {
+	// send stop
+	TWCR = (1 << TWINT) | (1 << TWEN) | (1 << TWSTO);
+	TWCR &= ~(1 << TWEN);
+}
+
+void i2c_write(unsigned char data) {
+	// Load data in tw data register
+	TWDR = data;
+	// clear twcr to start transmission
+	TWCR = (1 << TWINT) | (1 << TWEN);
+	//wait the end of transmission
+	while ((TWCR & (1 << TWINT)) == 0) {}
+}
+
+uint8_t i2c_read(uint8_t ack) {
+	// Enable data transmission with read direction bit
+	TWCR = (1 << TWINT) | (1 << TWEN) | (ack ? (1 << TWEA) : 0); // Enable ACK after reading
+	// Wait for read to complete
 	while (!(TWCR & (1 << TWINT)));
-}
+	// Read received data
+	uint8_t received_data = TWDR;
 
-// affiche le contenu du registre TWDR apres la mesure du capteur.
-void	i2c_read(void)
-{
-	// mettre en mode master transmitter 
-	
-	// allume
-	TWCR = (1 << TWINT) | (1 << TWEN) | (1 << TWEA);
-	while (!(TWCR & (1 << TWINT))) {}
-	// display_status_code();
-}
-
-// signed/ unsigned
-void	print_hex_value(unsigned char c)
-{
-	static char	hex[] = "0123456789ABCDEF";
-	uart_tx(hex[c / 16]);
-	uart_tx(hex[c % 16]);
+	// uart_printhex(received_data);
+	// uart_printStr(" ");
+	// Return the read data
+	return received_data;
 }
