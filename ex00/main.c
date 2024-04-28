@@ -1,6 +1,9 @@
 
 #include "lib.h"
+
 volatile int currentMode = 0;
+
+// 3 6 7 8
 
 void	display_led(void)
 {
@@ -15,10 +18,17 @@ void	switch_mode(void)
 	switch (currentMode)
 	{
 		case 0:
+			displayRV1();
 			break;
 		case 1:
+			displayLDR();
 			break;
-		_delay_ms(1000);
+		case 2:
+			displayNTC();
+			break;
+		case 3:
+			displayTEMP();
+			break;
 	}
 }
 
@@ -46,15 +56,14 @@ ISR(PCINT2_vect)
 	switch_mode();
 }
 
-
-
 int	main(void)
 {
+	adc_init();
 	uart_init();
 	i2c_init();
 	timer_init();
 
-	DDRB |= (1<<PB0) | (1<<PB1) | (1<<PB2) | (1<<PB4);
+	DDRB |= (1 << PB0) | (1 << PB1) | (1 << PB2) | (1 << PB4);
 	sei();
 	while (1)
 	{

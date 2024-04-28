@@ -8,7 +8,6 @@
 #include <avr/eeprom.h>
 #include <util/twi.h>
 
-
 // CONFIG 
 #define I2C_CPU_CLOCK_FREQ 100000
 #define START 1
@@ -44,23 +43,23 @@
 typedef int bool ;
 
 // uart_managmement.c
-void	uart_init(void);
-void	uart_tx(char c);
-void	uart_printstr(const char *str);
-char	uart_rx(void);
+void		uart_init(void);
+void		uart_tx(char c);
+void		uart_printstr(const char *str);
+char		uart_rx(void);
 
 // ic2Management.c
 #define ACK 1
 #define NACK 0
 
-void	i2c_init(void);
-void	i2c_start(uint8_t addr, uint8_t directionBit); //directionBit 1 = read 0 = write
-void	i2c_stop(void);
-void	i2c_write(unsigned char data);
-uint8_t	i2c_read(uint8_t ack);
-void	display_status_code(void);
-void	print_hex_value(unsigned char c);
-void	uart_printnbr(unsigned int nb);
+void		i2c_init(void);
+void		i2c_start(uint8_t addr, uint8_t directionBit); //directionBit 1 = read 0 = write
+void		i2c_stop(void);
+void		i2c_write(unsigned char data);
+uint8_t		i2c_read(uint8_t ack);
+void		display_status_code(void);
+void		print_hex_value(unsigned char c);
+void		uart_printnbr(unsigned int nb);
 
 //segments.c
 void	init_segments(void);
@@ -80,7 +79,13 @@ void		adc_init();
 uint16_t	adc_read(adc_channel channel);
 
 // timer_init.c
-void	timer_init(void);
+void		timer_init(void);
+
+// captor.c 
+void		displayRV1(void);
+void		displayLDR(void);
+void		displayNTC(void);
+void		displayTEMP(void);
 
 
 #endif
