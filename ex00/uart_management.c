@@ -54,3 +54,12 @@ void	uart_printnbr(unsigned int nb)
         uart_printnbr(nb / 10);
     uart_tx(nb % 10 + '0');
 }
+
+void uart_printhex(uint8_t n) {
+	uart_printstr("0x");
+	char c = n >> 4;
+	uart_tx(c < 10 ? c + '0' : c - 10 + 'A');
+	c = n & 0x0F;
+	uart_tx(c < 10 ? c + '0' : c - 10 + 'A');
+}
+

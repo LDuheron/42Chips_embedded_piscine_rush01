@@ -41,6 +41,7 @@ void i2c_write(unsigned char data) {
 	TWCR = (1 << TWINT) | (1 << TWEN);
 	//wait the end of transmission
 	while ((TWCR & (1 << TWINT)) == 0) {}
+
 }
 
 uint8_t i2c_read(uint8_t ack) {

@@ -59,6 +59,7 @@ ISR(PCINT2_vect)
 	// switch_mode();
 }
 
+
 int	main(void)
 {
 	adc_init();
