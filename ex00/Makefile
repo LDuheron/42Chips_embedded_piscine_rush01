@@ -8,6 +8,7 @@ AVRDUDE = avrdude
 #SETTINGS
 MCU = atmega328p # nom du device
 SERIAL = /dev/ttyUSB0 # port USB
+#SERIAL = /dev/tty.usbserial-140
 UART_BAUDRATE = 115200
 BAUDRATE =  115200 # unite de mesure du nombre de symbole transmissibles par secondes
 PROGRAMMER = arduino # 
@@ -22,6 +23,8 @@ SRCS += main.c
 SRCS += i2c_management.c
 SRCS += uart_management.c
 SRCS += timer_init.c
+SRCS += adc.c
+SRCS += segments.c
 
 BIN = $(SRCS:.c=.bin)
 
