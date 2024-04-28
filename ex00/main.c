@@ -19,6 +19,7 @@ ISR(PCINT0_vect)
 	else
 		currentMode++;
 	display_led();
+	uart_printnbr(currentMode);
 }
 
 // SW2 : go to previous mode

@@ -46,3 +46,11 @@ char	uart_rx(void)
     // return data
     return UDR0;
 }
+
+
+void	uart_printnbr(unsigned int nb)
+{
+    if (nb >= 10)
+        uart_printnbr(nb / 10);
+    uart_tx(nb % 10 + '0');
+}
