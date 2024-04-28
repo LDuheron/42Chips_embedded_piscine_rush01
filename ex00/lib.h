@@ -4,7 +4,7 @@
 
 #include "avr/io.h"
 #include "util/twi.h"
-#include "util/delay.h"
+#include "avr/interrupt.h"
 
 // CONFIG 
 #define I2C_CPU_CLOCK_FREQ 100000
@@ -53,7 +53,10 @@ void	i2c_stop(void);
 void	i2c_write(unsigned char data);
 void	i2c_read(void);
 void	display_status_code(void);
-// void	print_hex_value(char c);
 void	print_hex_value(unsigned char c);
+
+
+// timer_init.c
+void	timer_init(void);
 
 #endif

@@ -1,7 +1,5 @@
 
 #include "lib.h"
-
-
 volatile int currentMode = 0;
 
 void	display_led(void)
@@ -14,7 +12,7 @@ void	display_led(void)
 
 // SW1 : go to next mode
 // PAS DE MODE 5 ?  
-ISR(INT0_vect)
+ISR(PCINT0_vect)
 {
 	if (currentMode == 11)
 		currentMode = 0;
@@ -24,7 +22,7 @@ ISR(INT0_vect)
 }
 
 // SW2 : go to previous mode
-ISR(INT2_vect)
+ISR(PCINT2_vect)
 {
 	if (currentMode == 0)
 		currentMode = 11;
