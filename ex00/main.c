@@ -12,7 +12,7 @@ void	display_led(void)
 
 void	switch_mode(void)
 {
-	switch (color)
+	switch (currentMode)
 	{
 		case 0:
 			break;
@@ -32,6 +32,7 @@ ISR(PCINT0_vect)
 		currentMode++;
 	display_led();
 	uart_printnbr(currentMode);
+	switch_mode();
 }
 
 // SW2 : go to previous mode
@@ -42,6 +43,7 @@ ISR(PCINT2_vect)
 	else
 		currentMode--;
 	display_led();
+	switch_mode();
 }
 
 
